@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Jose SOLANILLOS</title>
+    <style>
+        /* ===== RESET ET VARIABLES ===== */
+        
+        /* Réinitialisation des marges et paddings par défaut */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables CSS pour les couleurs du thème */
+        :root {
+            --primary-color: #4a7c9e;      /* Couleur principale (bleu) */
+            --dark-color: #2c4f5e;         /* Couleur sombre pour le header */
+            --light-bg: #f5f5f5;           /* Fond clair */
+            --text-color: #333;            /* Couleur du texte principal */
+            --border-color: #ddd;          /* Couleur des bordures */
+        }
+
+        /* ===== STYLES GÉNÉRAUX DU BODY ===== */
+        
+        /* Style de base de la page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police moderne */
+            color: var(--text-color);      /* Couleur du texte */
+            line-height: 1.4;              /* Hauteur de ligne pour lisibilité */
+            background-color: #e0e0e0;     /* Fond gris pour simuler une feuille */
+            padding: 20px;                 /* Espacement autour du CV */
+        }
+
+        /* ===== CONTENEUR PRINCIPAL (FORMAT A4) ===== */
+        
+        /* Conteneur du CV au format A4 (210mm x 297mm) */
+        .cv-container {
+            max-width: 210mm;              /* Largeur A4 */
+            height: 297mm;                 /* Hauteur A4 exacte */
+            margin: 0 auto;                /* Centrer le CV */
+            background: white;             /* Fond blanc pour la feuille */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Ombre pour effet de profondeur */
+            position: relative;            /* Pour positionnement des enfants */
+            overflow: hidden;              /* Cacher le débordement */
+        }
+
+        /* ===== HEADER (EN-TÊTE) ===== */
+        
+        /* Bloc d'en-tête avec nom et contact - MODE SOMBRE par défaut */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)); /* Dégradé bleu */
+            color: white;                  /* Texte blanc */
+            padding: 20px 30px;            /* Espacement interne */
+            text-align: center;            /* Centrer le texte */
+            transition: all 0.4s ease;     /* Transition fluide entre les modes */
+            -webkit-print-color-adjust: exact; /* Forcer les couleurs à l'impression */
+            print-color-adjust: exact;     /* Standard CSS */
+        }
+
+        /* Nom principal dans l'en-tête */
+        .header h1 {
+            font-size: 1.8em;              /* Taille du nom */
+            margin-bottom: 8px;            /* Espacement sous le nom */
+            font-weight: 600;              /* Poids de la police (semi-gras) */
+            letter-spacing: 1px;           /* Espacement entre les lettres */
+            transition: all 0.4s ease;     /* Transition fluide */
+        }
+
+        /* Informations de contact */
+        .contact-info {
+            font-size: 0.85em;             /* Taille du texte de contact */
+            opacity: 0.95;                 /* Légère transparence */
+            transition: all 0.4s ease;     /* Transition fluide */
+        }
+
+        /* Chaque élément de contact (email, tél, adresse) */
+        .contact-info span {
+            margin: 0 8px;                 /* Espacement horizontal entre les éléments */
+        }
+
+        /* ===== MODE CLAIR (LIGHT MODE) ===== */
+        
+        /* Quand la classe "light-mode" est active sur le body */
+        body.light-mode .header {
+            background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%); /* Fond gris très clair */
+            color: var(--dark-color);      /* Texte sombre */
+            border-top: 4px solid var(--primary-color); /* Bordure bleue en haut */
+            border-bottom: 4px solid var(--primary-color); /* Bordure bleue en bas */
+        }
+
+        /* Nom en mode clair : plus gros et en bleu */
+        body.light-mode .header h1 {
+            color: var(--primary-color);   /* Couleur bleue */
+            font-size: 2em;                /* Plus gros */
+            font-weight: 700;              /* Plus gras */
+        }
+
+        /* Infos de contact en mode clair */
+        body.light-mode .contact-info {
+            color: #555;                   /* Gris foncé */
+            opacity: 1;                    /* Opacité complète */
+        }
+
+        /* ===== BOUTON DE TÉLÉCHARGEMENT ===== */
+        
+        /* Bouton fixe en haut à droite pour télécharger le CV */
+        .download-btn {
+            position: fixed;               /* Position fixe sur l'écran */
+            top: 20px;                     /* 20px du haut */
+            right: 20px;                   /* 20px de la droite */
+            background: var(--primary-color); /* Couleur de fond */
+            color: white;                  /* Texte blanc */
+            border: none;                  /* Pas de bordure */
+            padding: 10px 20px;            /* Espacement interne */
+            border-radius: 5px;            /* Coins arrondis */
+            cursor: pointer;               /* Curseur pointeur au survol */
+            font-size: 0.95em;             /* Taille du texte */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Ombre portée */
+            transition: all 0.3s ease;     /* Animation fluide au survol */
+            z-index: 1000;                 /* Au-dessus de tout */
+        }
+
+        /* Effet au survol du bouton */
+        .download-btn:hover {
+            background: var(--dark-color); /* Changer la couleur */
+            transform: translateY(-2px);   /* Soulever le bouton */
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3); /* Ombre plus prononcée */
+        }
+
+        /* ===== BOUTON THEME TOGGLE (CLAIR/SOMBRE) ===== */
+        
+        /* Bouton de switch entre mode clair et sombre */
+        .theme-toggle {
+            position: fixed;               /* Position fixe sur l'écran */
+            top: 20px;                     /* 20px du haut */
+            left: 20px;                    /* 20px de la gauche */
+            background: var(--primary-color); /* Couleur de fond */
+            color: white;                  /* Texte blanc */
+            border: none;                  /* Pas de bordure */
+            padding: 10px 15px;            /* Espacement interne */
+            border-radius: 50px;           /* Complètement arrondi (pilule) */
+            cursor: pointer;               /* Curseur pointeur */
+            font-size: 1.2em;              /* Taille de l'icône */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Ombre */
+            transition: all 0.3s ease;     /* Animation fluide */
+            z-index: 1000;                 /* Au-dessus de tout */
+            display: flex;                 /* Flexbox pour centrer l'icône */
+            align-items: center;           /* Centrer verticalement */
+            justify-content: center;       /* Centrer horizontalement */
+            width: 50px;                   /* Largeur fixe */
+            height: 50px;                  /* Hauteur fixe (cercle) */
+        }
+
+        /* Effet au survol du bouton theme */
+        .theme-toggle:hover {
+            background: var(--dark-color); /* Changer la couleur */
+            transform: scale(1.1) rotate(20deg); /* Agrandir et tourner */
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3); /* Ombre plus prononcée */
+        }
+
+        /* Animation de rotation au clic */
+        .theme-toggle:active {
+            transform: scale(0.95) rotate(-20deg); /* Réduire et tourner dans l'autre sens */
+        }
+
+        /* ===== GRILLE PRINCIPALE (MAIN CONTENT) ===== */
+        
+        /* Grille CSS pour organiser les sections */
+        .main-content {
+            display: grid;                 /* Utiliser CSS Grid */
+            grid-template-columns: 1fr;    /* 1 colonne par défaut (mobile) */
+            gap: 0;                        /* Pas d'espace entre les cellules */
+            height: calc(297mm - 90px);    /* Hauteur restante après l'en-tête */
+        }
+
+        /* ===== STYLES DES SECTIONS ===== */
+        
+        /* Style commun pour chaque section (Expériences, Compétences, etc.) */
+        .section {
+            padding: 15px 25px;            /* Espacement interne */
+        }
+
+        /* Titre de chaque section */
+        .section-title {
+            color: var(--primary-color);   /* Couleur bleue */
+            font-size: 1.15em;             /* Taille du titre */
+            margin-bottom: 10px;           /* Espacement sous le titre */
+            padding-bottom: 5px;           /* Espacement interne bas */
+            border-bottom: 2px solid var(--primary-color); /* Bordure inférieure */
+            font-weight: 600;              /* Poids de la police */
+        }
+
+        /* ===== ITEMS D'EXPÉRIENCE ET FORMATION ===== */
+        
+        /* Chaque élément d'expérience ou de formation */
+        .experience-item, .formation-item {
+            margin-bottom: 12px;           /* Espacement entre les items */
+        }
+
+        /* Supprimer la marge du dernier élément */
+        .experience-item:last-child, .formation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* En-tête de l'item (titre et période) */
+        .item-header {
+            display: flex;                 /* Flexbox pour aligner */
+            justify-content: space-between;/* Espace entre titre et période */
+            align-items: baseline;         /* Aligner sur la ligne de base */
+            margin-bottom: 4px;            /* Espacement sous l'en-tête */
+            flex-wrap: wrap;               /* Permettre le retour à la ligne */
+        }
+
+        /* Titre de l'item (poste ou diplôme) */
+        .item-title {
+            font-weight: 600;              /* Gras */
+            color: var(--dark-color);      /* Couleur sombre */
+            font-size: 0.95em;             /* Taille du texte */
+        }
+
+        /* Période (dates) */
+        .item-period {
+            color: #666;                   /* Couleur grise */
+            font-size: 0.8em;              /* Taille réduite */
+            font-style: italic;            /* Style italique */
+        }
+
+        /* Nom de l'entreprise ou de l'école */
+        .item-company {
+            color: #555;                   /* Couleur grise foncée */
+            font-size: 0.85em;             /* Taille réduite */
+            margin-bottom: 3px;            /* Espacement sous le nom */
+        }
+
+        /* Description de l'item (liste des tâches) */
+        .item-description {
+            font-size: 0.82em;             /* Taille réduite */
+            color: #555;                   /* Couleur grise */
+            margin-left: 12px;             /* Indentation */
+            line-height: 1.3;              /* Hauteur de ligne */
+        }
+
+        /* Chaque élément de la liste de description */
+        .item-description li {
+            margin-bottom: 2px;            /* Petit espacement entre les lignes */
+        }
+
+        /* ===== COMPÉTENCES ===== */
+        
+        /* Liste des compétences */
+        .skills-list {
+            display: flex;                 /* Flexbox */
+            flex-direction: column;        /* Disposition verticale */
+            gap: 6px;                      /* Espacement entre les compétences */
+        }
+
+        /* Chaque compétence */
+        .skill-item {
+            font-size: 0.85em;             /* Taille du texte */
+            padding-left: 12px;            /* Indentation pour le bullet point */
+            position: relative;            /* Pour positionner le pseudo-élément */
+            line-height: 1.3;              /* Hauteur de ligne */
+        }
+
+        /* Bullet point avant chaque compétence */
+        .skill-item::before {
+            content: "▪";                  /* Caractère du bullet */
+            position: absolute;            /* Position absolue */
+            left: 0;                       /* À gauche */
+            color: var(--primary-color);   /* Couleur bleue */
+            font-weight: bold;             /* Gras */
+        }
+
+        /* ===== LANGUES ===== */
+        
+        /* Chaque langue */
+        .language-item {
+            margin-bottom: 8px;            /* Espacement entre les langues */
+        }
+
+        /* Nom de la langue */
+        .language-name {
+            font-weight: 600;              /* Gras */
+            color: var(--dark-color);      /* Couleur sombre */
+            margin-bottom: 4px;            /* Espacement sous le nom */
+            font-size: 0.9em;              /* Taille du texte */
+        }
+
+        /* Conteneur de la barre de niveau */
+        .language-bar {
+            width: 100%;                   /* Pleine largeur */
+            height: 8px;                   /* Hauteur de la barre */
+            background-color: #e0e0e0;     /* Fond gris clair */
+            border-radius: 4px;            /* Coins arrondis */
+            overflow: hidden;              /* Cacher le débordement */
+            /* FORCER L'AFFICHAGE DES COULEURS À L'IMPRESSION */
+            -webkit-print-color-adjust: exact; /* Pour Safari/Chrome */
+            print-color-adjust: exact;     /* Standard CSS */
+        }
+
+        /* Niveau de maîtrise (barre de progression) */
+        .language-level {
+            height: 100%;                  /* Hauteur complète */
+            background: linear-gradient(90deg, var(--primary-color), #5eb3d6); /* Dégradé bleu */
+            transition: width 0.3s ease;   /* Animation fluide */
+            /* FORCER L'AFFICHAGE DES COULEURS À L'IMPRESSION */
+            -webkit-print-color-adjust: exact; /* Pour Safari/Chrome */
+            print-color-adjust: exact;     /* Standard CSS */
+        }
+
+        /* ===== RESPONSIVE - DESKTOP (A4) ===== */
+        
+        /* À partir de 768px de largeur (tablette et desktop) */
+        @media screen and (min-width: 768px) {
+            /* Grille en 2 colonnes */
+            .main-content {
+                grid-template-columns: 1.5fr 1fr; /* Colonne gauche plus large */
+                grid-template-rows: auto auto;    /* 2 lignes automatiques */
+            }
+
+            /* Sections de gauche avec bordure droite */
+            .section-left {
+                grid-column: 1;            /* Colonne 1 */
+                border-right: 1px solid var(--border-color); /* Bordure séparatrice */
+            }
+
+            /* Sections de droite */
+            .section-right {
+                grid-column: 2;            /* Colonne 2 */
+            }
+
+            /* ORDRE DES BLOCS - LIGNE 1 */
+            .experiences {
+                grid-row: 1;               /* Ligne 1 */
+                grid-column: 1;            /* Colonne 1 (gauche) */
+            }
+
+            .competences {
+                grid-row: 1;               /* Ligne 1 */
+                grid-column: 2;            /* Colonne 2 (droite) */
+            }
+
+            /* ORDRE DES BLOCS - LIGNE 2 */
+            .formation {
+                grid-row: 2;               /* Ligne 2 */
+                grid-column: 1;            /* Colonne 1 (gauche) */
+            }
+
+            .langues {
+                grid-row: 2;               /* Ligne 2 */
+                grid-column: 2;            /* Colonne 2 (droite) */
+            }
+        }
+
+        /* ===== RESPONSIVE - MOBILE ===== */
+        
+        /* Pour les écrans de moins de 768px (smartphones) */
+        @media screen and (max-width: 767px) {
+            /* Réduire le padding du body */
+            body {
+                padding: 10px;
+            }
+
+            /* Hauteur automatique sur mobile */
+            .cv-container {
+                height: auto;              /* Hauteur automatique */
+                min-height: 297mm;         /* Minimum A4 */
+            }
+
+            /* Réduire la taille du nom */
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            /* Réduire la taille des infos de contact */
+            .contact-info {
+                font-size: 0.8em;
+            }
+
+            /* Empiler les infos de contact verticalement */
+            .contact-info span {
+                display: block;            /* Chaque info sur sa ligne */
+                margin: 5px 0;             /* Espacement vertical */
+            }
+
+            /* Réduire le padding des sections */
+            .section {
+                padding: 15px;
+            }
+
+            /* Bouton en position statique sur mobile */
+            .download-btn {
+                position: static;          /* Position normale */
+                width: 100%;               /* Pleine largeur */
+                margin-bottom: 10px;       /* Espacement en bas */
+            }
+
+            /* Bouton theme en position statique sur mobile */
+            .theme-toggle {
+                position: static;          /* Position normale */
+                margin: 0 auto 10px auto;  /* Centré avec espacement en bas */
+            }
+
+            /* Hauteur automatique pour la grille */
+            .main-content {
+                height: auto;
+            }
+        }
+
+        /* ===== STYLES D'IMPRESSION ===== */
+        
+        @media print {
+            /* Fond blanc et pas de padding */
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            /* Supprimer l'ombre et ajuster la taille */
+            .cv-container {
+                box-shadow: none;          /* Pas d'ombre */
+                max-width: 100%;           /* Pleine largeur */
+                margin: 0;                 /* Pas de marge */
+                height: 297mm;             /* Hauteur A4 exacte */
+            }
+
+            /* Cacher le bouton de téléchargement */
+            .download-btn {
+                display: none !important;
+            }
+
+            /* Cacher le bouton de theme */
+            .theme-toggle {
+                display: none !important;
+            }
+
+            /* FORCER LE GRID 2 COLONNES À L'IMPRESSION */
+            .main-content {
+                grid-template-columns: 1.5fr 1fr !important; /* 2 colonnes forcées */
+                grid-template-rows: auto auto !important;    /* 2 lignes forcées */
+                height: calc(297mm - 85px) !important;       /* Hauteur après header */
+            }
+
+            /* Forcer la disposition en colonnes */
+            .section-left {
+                grid-column: 1 !important;                   /* Colonne 1 */
+                border-right: 1px solid var(--border-color) !important; /* Bordure */
+            }
+
+            .section-right {
+                grid-column: 2 !important;                   /* Colonne 2 */
+            }
+
+            /* FORCER LA POSITION DES BLOCS */
+            .experiences {
+                grid-row: 1 !important;    /* Ligne 1 */
+                grid-column: 1 !important; /* Colonne 1 */
+            }
+
+            .competences {
+                grid-row: 1 !important;    /* Ligne 1 */
+                grid-column: 2 !important; /* Colonne 2 */
+            }
+
+            .formation {
+                grid-row: 2 !important;    /* Ligne 2 */
+                grid-column: 1 !important; /* Colonne 1 */
+            }
+
+            .langues {
+                grid-row: 2 !important;    /* Ligne 2 */
+                grid-column: 2 !important; /* Colonne 2 */
+            }
+
+            /* Réduire les espacements pour l'impression */
+            .header {
+                padding: 15px 25px !important;
+            }
+
+            .section {
+                padding: 12px 20px !important;
+            }
+
+            .section-title {
+                font-size: 1.1em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .experience-item, .formation-item {
+                margin-bottom: 10px !important;
+            }
+
+            .item-description {
+                font-size: 0.8em !important;
+                line-height: 1.2 !important;
+            }
+
+            /* FORCER L'AFFICHAGE DES COULEURS D'ARRIÈRE-PLAN */
+            .language-bar, .language-level {
+                -webkit-print-color-adjust: exact !important; /* Chrome/Safari */
+                print-color-adjust: exact !important;         /* Standard */
+                color-adjust: exact !important;               /* Ancien standard */
+            }
+
+            /* Configuration de la page A4 */
+            @page {
+                size: A4;                  /* Format A4 */
+                margin: 0;                 /* Pas de marge */
+            }
+        }
+
+        /* Classe pour cacher à l'impression */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bouton de switch thème clair/sombre (caché à l'impression) -->
+    <button class="theme-toggle no-print" onclick="toggleTheme()" title="Changer de thème">
+        <span id="theme-icon">🌙</span>
+    </button>
+
+    <!-- Bouton de téléchargement (caché à l'impression) -->
+    <button class="download-btn no-print" onclick="downloadPDF()">📥 Télécharger CV (PDF)</button>
+
+    <!-- Conteneur principal du CV -->
+    <div class="cv-container">
+        <!-- ===== EN-TÊTE ===== -->
+        <header class="header">
+            <h1>Jose SOLANILLOS</h1>
+            <div class="contact-info">
+<span>📧 joseso@free.fr</span>
+                <span>📱 +698009350</span>
+                <span>📍 Arras</span>
+            </div>
+        </header>
+
+        <!-- ===== CONTENU PRINCIPAL (GRILLE) ===== -->
+        <main class="main-content">
+            
+            <!-- ===== BLOC 1: EXPÉRIENCES PROFESSIONNELLES (gauche, ligne 1) ===== -->
+            <section class="section section-left experiences">
+                <h2 class="section-title">Expériences Professionnelles</h2>
+                
+                <!-- Expérience 1 -->
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span class="item-title">Vente de produits Bio</span>
+                        <span class="item-period">2021 - 2025</span>
+                    </div>
+                    <div class="item-company">www.le-bons.com</div>
+                    <ul class="item-description">
+                        <li>L'activité s'articule sur l'Huile d'Olive, la Truffe "Tuber Melanosporum" et le Miel</li>
+                    </ul>
+                </div>
+
+                <!-- Expérience 2 -->
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span class="item-title">Gérant de NOTEC FRANCE</span>
+                        <span class="item-period">2011 - 2019</span>
+                    </div>
+                    <ul class="item-description">
+                        <li>Import / Export d'éclairage LED</li>
+                    </ul>
+                </div>
+
+                <!-- Expérience 3 -->
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span class="item-title">Gérant de 2EI Engineering</span>
+                        <span class="item-period">2003 - 2005</span>
+                    </div>
+                    <ul class="item-description">
+                        <li>Carte pour chargeur industriels</li>
+                    </ul>
+                </div>
+
+                <!-- Expérience 4 -->
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span class="item-title">Formateur en électrotechnique</span>
+                        <span class="item-period">1997 - 2003</span>
+                    </div>
+                    <ul class="item-description">
+                        <li>Préparation de cours, vis à vis pédagogique et suivi des élèves en stage</li>
+                    </ul>
+                </div>
+
+                <!-- Expérience 5 -->
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span class="item-title">Technicien en automatisme et informatique industrielle</span>
+                        <span class="item-period">1989-1993</span>
+                    </div>
+                    <ul class="item-description">
+                        <li>Relation avec le client, développement du projet ainsi que la mise en place sur site et formation du personnel en charge du projet</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ===== BLOC 2: COMPÉTENCES (droite, ligne 1) ===== -->
+            <section class="section section-right competences">
+                <h2 class="section-title">Compétences</h2>
+                <div class="skills-list">
+                    <!-- Liste des compétences avec catégories -->
+                    <div class="skill-item"><strong>Soudage:</strong> Arc Électrode Enrobée (AEE), TIG</div>
+                    <div class="skill-item"><strong>Procédés:</strong> Toutes positions, mono/multi-passes, sur tube</div>
+                    <div class="skill-item"><strong>Lecture technique:</strong> Plans isométriques, orthogonaux, DMOS</div>
+                    <div class="skill-item"><strong>Qualité:</strong> Auto-contrôle visuel et dimensionnel</div>
+                    <div class="skill-item"><strong>Atelier:</strong> Meuleuse, scie à ruban, presse hydraulique</div>
+                    <div class="skill-item"><strong>Sécurité:</strong> Normes HSE, EPI, travaux par points chauds</div>
+                </div>
+            </section>
+
+            <!-- ===== BLOC 3: FORMATION (gauche, ligne 2) ===== -->
+            <section class="section section-left formation">
+                <h2 class="section-title">Formation</h2>
+
+                <!-- Formation 1 : formation en cours -->
+                <div class="formation-item">
+                    <div class="item-header">
+                        <span class="item-title">Titre Professionnel Soudeur en Tuyauterie Industrielle</span>
+                        <span class="item-period">2026 - en cours</span>
+                    </div>
+                    <div class="item-company">Hénin-Beaumont · 602h en centre + 175h en entreprise</div>
+                    <ul class="item-description">
+                        <li>CCP1 : Souder à plat (procédés AEE et TIG)</li>
+                        <li>CCP2 : Souder en toutes positions (procédés AEE et TIG)</li>
+                        <li>Lecture de plans, DMOS, contrôle qualité, HSE</li>
+                    </ul>
+                </div>
+
+                <!-- Formation 2 -->
+                <div class="formation-item">
+                    <div class="item-header">
+                        <span class="item-title">Titre Professionnel CDA</span>
+                        <span class="item-period">2020 - 2021</span>
+                    </div>
+                    <ul class="item-description">
+                        <li>Formation pour un Titre Professionnel Concepteur et Développeur d'Application</li>
+                        <li>Développeur FRONT-END (HTML, CSS, JAVASCRIPT, AJAX. Développeur BACK-END (PHP7, LARAVEL, test d'application)</li>
+                        <li>Application mobile</li>
+                        <li>Modélisation, conception, maquettage, bases de données</li>
+                    </ul>
+                </div>
+
+                <!-- Formation 3 -->
+                <div class="formation-item">
+                    <div class="item-header">
+                        <span class="item-title">Maîtrise EEA</span>
+                        <span class="item-period">1996 - 1997</span>
+                    </div>
+                    <div class="item-company">Electrotechnique Electronique Automatisme</div>
+                </div>
+            </section>
+
+            <!-- ===== BLOC 4: LANGUES (droite, ligne 2) ===== -->
+            <section class="section section-right langues">
+                <h2 class="section-title">Langues</h2>
+                
+                <!-- Langue 1 : Anglais -->
+                <div class="language-item">
+                    <div class="language-name">Anglais</div>
+                    <div class="language-bar">
+                        <!-- Barre de niveau à 40% -->
+                        <div class="language-level" style="width: 40%;"></div>
+                    </div>
+                </div>
+
+                <!-- Langue 2 : Espagnol -->
+                <div class="language-item">
+                    <div class="language-name">Espagnol</div>
+                    <div class="language-bar">
+                        <!-- Barre de niveau à 70% -->
+                        <div class="language-level" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Fonction pour basculer entre mode clair et mode sombre
+        function toggleTheme() {
+            // Récupérer l'élément body
+            const body = document.body;
+            // Récupérer l'icône du bouton
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Basculer la classe "light-mode" sur le body
+            body.classList.toggle('light-mode');
+            
+            // Changer l'icône en fonction du mode actif
+            if (body.classList.contains('light-mode')) {
+                // Mode clair activé : afficher l'icône soleil
+                themeIcon.textContent = '🌞';
+            } else {
+                // Mode sombre activé : afficher l'icône lune
+                themeIcon.textContent = '🌙';
+            }
+        }
+
+        // Fonction pour télécharger le CV en PDF
+        function downloadPDF() {
+            // Ouvre la boîte de dialogue d'impression du navigateur
+            // L'utilisateur peut ensuite choisir "Enregistrer au format PDF"
+            window.print();
+        }
+
+        // Animation des barres de langue au chargement de la page
+        window.addEventListener('load', () => {
+            // Sélectionner toutes les barres de niveau
+            const languageBars = document.querySelectorAll('.language-level');
+            
+            // Pour chaque barre de niveau
+            languageBars.forEach(bar => {
+                // Récupérer la largeur finale
+                const width = bar.style.width;
+                // Commencer à 0%
+                bar.style.width = '0';
+                // Animer vers la largeur finale après 100ms
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
